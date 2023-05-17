@@ -1,4 +1,3 @@
-
 package com.kinman.mapper;
 
 import com.kinman.pojo.News;
