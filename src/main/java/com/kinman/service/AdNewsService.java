@@ -15,4 +15,8 @@ public interface AdNewsService {
     List<News> getNewsListByName(String name);
 
     PageBean findByPage(Integer page, Integer pageSize, String title, LocalDate begin, LocalDate end);
+
+    void add(News news);
+
+    void updateNews(News news);
 }

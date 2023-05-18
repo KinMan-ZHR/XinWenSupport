@@ -9,7 +9,9 @@ import com.kinman.service.AdNewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 @Service
 public class AdNewsServiceImpl implements AdNewsService {
@@ -50,4 +52,24 @@ public class AdNewsServiceImpl implements AdNewsService {
         Page<News> newsPage= (Page<News>) newsList;
         return new PageBean(newsPage.getTotal(), newsPage.getResult());
     }
+
+    /**
+     * @param news 新闻对象
+     */
+    @Override
+    public void add(News news) {
+         news.setUpdateTime(Timestamp.valueOf(LocalDateTime.now()));
+         newsMapper.addNews(news);
+
+    }
+
+    /**
+     * @param news
+     */
+    @Override
+    public void updateNews(News news) {
+        news.setUpdateTime(Timestamp.valueOf(LocalDateTime.now()));
+        newsMapper.updateNews(news);
+    }
+
 }
