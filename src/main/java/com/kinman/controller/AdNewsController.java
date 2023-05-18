@@ -75,6 +75,29 @@ public Result deleteNewsById(@PathVariable long id){
         return Result.success(pageBean);
 
     }
+    /**
+     * 添加新闻
+     * @param news 新闻对象
+     * @return Result
+     */
+    @PostMapping
+    public Result  addNews(@RequestBody News news){
+        log.info("添加部门数据:{}",news);//{}的意思是占位符，后面的dept会替换掉占位符。
+        adNewsService.add(news);
+        return Result.success();
+    }
+    /**
+     * 修改新闻
+     * @param news 新闻对象
+     *             @return Result
+     *
+     */
 
+    @PutMapping
+    public Result updateNews(@RequestBody News news){
+        log.info("修改新闻数据:{}",news);
+        adNewsService.updateNews(news);
+        return Result.success();
+    }
 
 }
