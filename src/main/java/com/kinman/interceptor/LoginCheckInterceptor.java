@@ -35,6 +35,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
             Result error = Result.error("NOT_LOGIN");
             //手动转换 对象--json --------> 阿里巴巴fastJSON
             String notLogin = JSONObject.toJSONString(error);
+            //手动写入响应体,返回给前端,前端解析json,如果是未登录,跳转到登录页面
             resp.getWriter().write(notLogin);
             return false;
         }
