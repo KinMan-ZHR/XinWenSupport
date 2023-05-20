@@ -1,0 +1,27 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--对-->
+<mapper namespace="com.kinman.mapper.UsersMapper">
+    <!--    条件查询,根据用户姓名(string)，和身份（boolean）-->
+    <select id="getUserList" resultType="com.kinman.pojo.User">
+        select * from users
+        <where>
+            <!--            因为name是string类型,不传入东西的时候默认值是空字符串-->
+            <if test="username != null and username != ''">username like concat('%',#{username},'%')</if>
+            <if test="identity != null">
+                and identity = #{identity}
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+    <!--    批量删除新闻-->
+    <delete id="deleteBat">
+        delete from users
+        where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

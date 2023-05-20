@@ -18,16 +18,6 @@ public class AdNewsController {
     @Autowired
     private AdNewsService adNewsService;
     /**
-     * 查询全部新闻数据
-     * @return Result
-     */
-    @GetMapping
-    public Result adNews(){
-        log.info("查询全部新闻数据");
-        List<News>newsList= adNewsService.getNewsList();
-        return Result.success(newsList);
-    }
-    /**
      * 根据id删除新闻
      * @param id 新闻id
      * @return Result
@@ -61,9 +51,9 @@ public Result deleteNewsById(@PathVariable long id){
      * @param end 结束时间
      * @return Result
      */
-    @GetMapping("/pageIf")
+    @GetMapping()
     public Result pageIf(@RequestParam(defaultValue = "1") Integer page,
-                         @RequestParam(defaultValue = "10") Integer pageSize,
+                         @RequestParam(defaultValue = "5    ") Integer pageSize,
                          String title,
                          @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate begin,
                          @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate end) {
@@ -82,7 +72,7 @@ public Result deleteNewsById(@PathVariable long id){
      */
     @PostMapping
     public Result  addNews(@RequestBody News news){
-        log.info("添加新闻数据:{}",news);//{}的意思是占位符，后面的dept会替换掉占位符。
+        log.info("添加新闻数据:{}",news);//{}的意思是占位符，后面的news会替换掉占位符。
         adNewsService.add(news);
         return Result.success();
     }
