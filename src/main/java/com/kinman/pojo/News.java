@@ -13,4 +13,6 @@ public class News {
   private String title;
   private String url;
   private java.sql.Timestamp updateTime;
+  private boolean category;
+    private String image;
 }

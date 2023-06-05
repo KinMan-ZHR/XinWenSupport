@@ -1,7 +1,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--对-->
-<mapper namespace="com.kinman.mapper.NewsMapper">
+<mapper namespace="com.kinman.mapper.NewsItemMapper">
     <!--    条件查询-->
     <select id="findByPage" resultType="com.kinman.pojo.News">
         select * from news
@@ -11,6 +11,8 @@
             <if test="begin != null">
                 and update_time between #{begin} and #{end}
             </if>
+            <if test="category != null">and category = #{category}</if>
+            <if test="image != null and image !='' ">and image like concat('%',#{image},'%')</if>
         </where>
         order by update_time desc
     </select>

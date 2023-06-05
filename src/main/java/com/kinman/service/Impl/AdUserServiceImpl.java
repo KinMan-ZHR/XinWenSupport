@@ -46,4 +46,45 @@ public class AdUserServiceImpl implements AdUserService {
     public User login(User user) {
         return usersMapper.getUserByNameAndPassword(user);
     }
+
+    /**
+     * @param user 用户
+     *             添加用户
+     *
+     */
+    @Override
+    public void addUser(User user) {
+        usersMapper.addUser(user);
+
+    }
+
+    /**
+     * @param user  用户
+     *              更新用户
+     */
+    @Override
+    public void updateUser(User user) {
+        usersMapper.updateUser(user);
+
+    }
+
+    /**
+     * @param id  用户id
+     * @return 用户
+     */
+    @Override
+    public User getUserById(long id) {
+
+        return usersMapper.getUserById(id);
+    }
+
+    /**
+     * @param id  用户id
+     * @param status 用户状态
+     */
+    @Override
+    public void updateUserStatus(long id, Boolean status) {
+        usersMapper.updateUserStatus(id,status);
+
+    }
 }

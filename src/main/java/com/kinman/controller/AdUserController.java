@@ -52,5 +52,50 @@ public class AdUserController {
         // 4.将PageBean对象封装到Result对象中
         return Result.success(pageBean);
     }
+    /**
+     * 添加用户
+     * @param user 用户对象
+     * @return Result
+     */
+    @PostMapping()
+    public Result addUser(@RequestBody User user){
+        log.info("添加用户");
+        adUserService.addUser(user);
+        return Result.success();
+    }
+    /**
+     * 根据id查询用户
+     * @param id 用户id
+     * @return Result
+     */
+    @GetMapping("/{id}")
+    public Result getUserById(@PathVariable long id){
+        log.info("根据id查询用户");
+        User user=adUserService.getUserById(id);
+        return Result.success(user);
+    }
+    /**
+     * 修改用户
+     * @param user 用户对象
+     * @return Result
+     */
+    @PutMapping()
+    public Result updateUser(@RequestBody User user){
+        log.info("修改用户");
+        adUserService.updateUser(user);
+        return Result.success();
+    }
+    /**
+     * 根据id修改用户状态
+     * @param id 用户id
+     * @param status 用户状态
+     * @return Result
+     */
+    @PutMapping("/{id}/{status}")
+    public Result updateUserStatus(@PathVariable long id,@PathVariable Boolean status){
+        log.info("根据id修改用户状态");
+        adUserService.updateUserStatus(id,status);
+        return Result.success();
+    }
 
 }

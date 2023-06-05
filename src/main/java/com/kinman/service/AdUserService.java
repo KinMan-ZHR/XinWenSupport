@@ -9,4 +9,12 @@ public interface AdUserService {
     PageBean getUserList(Integer page, Integer pageSize, String username, Boolean identity);
 
     User login(User user);
+
+    void addUser(User user);
+
+    void updateUser(User user);
+
+    User getUserById(long id);
+
+    void updateUserStatus(long id, Boolean status);
 }

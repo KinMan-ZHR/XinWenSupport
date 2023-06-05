@@ -2,7 +2,7 @@ package com.kinman.service.Impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.kinman.mapper.NewsMapper;
+import com.kinman.mapper.NewsItemMapper;
 import com.kinman.pojo.News;
 import com.kinman.pojo.PageBean;
 import com.kinman.service.AdNewsService;
@@ -16,15 +16,15 @@ import java.util.List;
 @Service
 public class AdNewsServiceImpl implements AdNewsService {
     @Autowired
-    private NewsMapper newsMapper;
+    private NewsItemMapper newsItemMapper;
     @Override
     public List<News> getNewsList() {
-      return   newsMapper.getNewsList();
+      return   newsItemMapper.getNewsList();
     }
 
     @Override
     public int deleteNewsById(long id) {
-        return newsMapper.deleteNewsById(id);
+        return newsItemMapper.deleteNewsById(id);
     }
 
     /**
@@ -33,7 +33,7 @@ public class AdNewsServiceImpl implements AdNewsService {
      */
     @Override
     public List<News> getNewsListByName(String name) {
-        return newsMapper.getNewsListByName(name);
+        return newsItemMapper.getNewsListByName(name);
     }
 
     /**
@@ -45,9 +45,13 @@ public class AdNewsServiceImpl implements AdNewsService {
      * @return 分页对象
      */
     @Override
-    public PageBean findByPage(Integer page, Integer pageSize, String title, LocalDate begin, LocalDate end) {
+    public PageBean findByPage(Integer page, Integer pageSize, String title, String image, Boolean category, LocalDate begin, LocalDate end) {
+
         PageHelper.startPage(page,pageSize);
-        List<News> newsList = newsMapper.findByPage(title,begin,end);
+        if (end==null){
+            end=LocalDate.now();
+        }
+        List<News> newsList = newsItemMapper.findByPage(title,image,category,begin,end);
         //装载
         Page<News> newsPage= (Page<News>) newsList;
         return new PageBean(newsPage.getTotal(), newsPage.getResult());
@@ -59,7 +63,7 @@ public class AdNewsServiceImpl implements AdNewsService {
     @Override
     public void add(News news) {
          news.setUpdateTime(Timestamp.valueOf(LocalDateTime.now()));
-         newsMapper.addNews(news);
+         newsItemMapper.addNews(news);
 
     }
 
@@ -69,7 +73,18 @@ public class AdNewsServiceImpl implements AdNewsService {
     @Override
     public void updateNews(News news) {
         news.setUpdateTime(Timestamp.valueOf(LocalDateTime.now()));
-        newsMapper.updateNews(news);
+        newsItemMapper.updateNews(news);
+    }
+
+    /**
+     * @param newsList
+     */
+    @Override
+    public void batchAddNews(List<News> newsList) {
+        for (News news: newsList) {
+            news.setUpdateTime(Timestamp.valueOf(LocalDateTime.now()));
+        }
+        newsItemMapper.batchAddNews(newsList);
     }
 
 }

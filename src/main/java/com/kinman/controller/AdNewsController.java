@@ -53,15 +53,15 @@ public Result deleteNewsById(@PathVariable long id){
      */
     @GetMapping()
     public Result pageIf(@RequestParam(defaultValue = "1") Integer page,
-                         @RequestParam(defaultValue = "5    ") Integer pageSize,
-                         String title,
+                         @RequestParam(defaultValue = "5") Integer pageSize,
+                         String title,String image,boolean category,
                          @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate begin,
                          @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate end) {
         // 1.接收前端传递的参数,前端传递的参数是page和pageSize，这里接收的参数名要和前端传递的参数名一致
         // 2.调用service查询分页数据
         // 3.将分页数据返回给前端
-        log.info("page = {},pageSize = {},{},{},{}", page,pageSize,title,begin,end);
-        PageBean pageBean = adNewsService.findByPage(page, pageSize,title,begin,end);
+        log.info("page = {},pageSize = {},{},{},{},{},{}", page,pageSize,title,image,category,begin,end);
+        PageBean pageBean = adNewsService.findByPage(page, pageSize,title,image,category,begin,end);
         return Result.success(pageBean);
 
     }
@@ -74,6 +74,15 @@ public Result deleteNewsById(@PathVariable long id){
     public Result  addNews(@RequestBody News news){
         log.info("添加新闻数据:{}",news);//{}的意思是占位符，后面的news会替换掉占位符。
         adNewsService.add(news);
+        return Result.success();
+    }
+    /**
+     * 批量添加新闻
+     */
+    @PostMapping("/batch")
+    public Result batchAddNews(@RequestBody List<News> newsList){
+        log.info("批量添加新闻数据:{}",newsList);
+        adNewsService.batchAddNews(newsList);
         return Result.success();
     }
     /**
